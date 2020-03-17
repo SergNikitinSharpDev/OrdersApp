@@ -1,0 +1,70 @@
+﻿@model List<OrdersApp.Models.View.OrderProductModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/orders");
+}
+
+<h2>Orders Page</h2>
+<section>
+    <table>
+        <thead>
+            <tr>
+                <th>Select</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Country</th>
+                <th>Products/Quantity/Price/Total</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="width: 5%">
+                        @Html.CheckBox("select", htmlAttributes: new { value = item.Order.Id })
+                    </td>
+                    <td style="width: 10%">
+                        @Html.DisplayFor(modelItem => item.Order.FirstName)
+                    </td>
+                    <td style="width: 10%">
+                        @Html.DisplayFor(modelItem => item.Order.LastName)
+                    </td>
+                    <td style="width: 20%">
+                        @Html.DisplayFor(modelItem => item.Order.Address)
+                    </td>
+                    <td style="width: 10%">
+                        @Html.DisplayFor(modelItem => item.Order.City)
+                    </td>
+                    <td style="width: 10%">
+                        @Html.DisplayFor(modelItem => item.Order.State)
+                    </td>
+                    <td style="width: 10%">
+                        @Html.DisplayFor(modelItem => item.Order.Country)
+                    </td>
+                    <td>
+                        <ul>
+                            @foreach (var prod in item.Products)
+                            {
+                                <li>
+                                    <span>@Html.DisplayFor(modelItem => prod.Product.Name)</span>
+                                    <span>(Qty: @Html.DisplayFor(modelItem => prod.Quantity))</span>
+                                    <span>Price: @Html.DisplayFor(modelItem => prod.Price)</span>
+                                    <span>Total:@Html.DisplayFor(modelItem => prod.Total)</span>
+                                </li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button id="processOrdersBtn">Process Shipments</button>
+    <textarea id="ordersResult" style="width: 100%" rows="15"></textarea>
+</section>
